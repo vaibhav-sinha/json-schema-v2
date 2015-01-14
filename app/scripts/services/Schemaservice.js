@@ -73,6 +73,32 @@ angular.module('jsonschemaV4App')
                 this.clean(self.schema);
             };
 
+            this.addRequired = function(schema, key, isRequired) {
+
+                var properties = schema.parent;
+
+                if (properties) {
+                    var parentSchema = properties.parent;
+
+                    if (parentSchema) {
+
+                        if (isRequired) {
+                            if (!parentSchema.required) {
+                                parentSchema.required = [];
+                            }
+                            parentSchema.required.push(key);
+                        } else {
+                            if (parentSchema.required) {
+                                var index = parentSchema.required.indexOf(key);
+                                if (index > -1) {
+                                    parentSchema.required.splice(index, 1);
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
             /**
             * This gets run every time the code view is selected!
             * ---------------------------------------------------
@@ -87,7 +113,6 @@ angular.module('jsonschemaV4App')
             */
             this.clean = function(obj) {
                 var key = obj['__key__'];
-
                 for (var k in obj)
                 {
                     if (typeof obj[k] == "object" && obj[k] !== null) {
@@ -105,30 +130,11 @@ angular.module('jsonschemaV4App')
                             Metadata keywords.
                             */
                             case '__required__':
-
                                 var required = obj[k];
-                              /*  console.log(obj[k].__key__);
-                                console.log(required);
-                                console.log(obj.__parent__);*/
-                                var s = self.getSchema(obj.__parent__);
-
-                                if (!s) {
-                                    break;
-                                }
-                                if (required) {
-                                    if (!s.required) {
-                                         s.required = [];
-                                    }
-                                    s.required.push(key);
-                                } else {
-                                    if (s.required) {
-                                        var index = s.required.indexOf(key);
-                                        if (index > -1) {
-                                            s.required.splice(index, 1);
-                                        }
-                                    }
-                                }   
+                                self.addRequired(obj, key, required);
                             break;
+                            case '__parent':
+                                console.log('obj.__parent__' + '=' + obj.__parent__);
                             case '__removed__':
                                 break;
                             /*
@@ -489,7 +495,8 @@ angular.module('jsonschemaV4App')
 
                     switch (String(k)) {
                         case 'id':
-                            if (obj[k] == id) {
+                            if (String(obj[k]) == String(id)) {
+                                console.log(obj);
                                 return obj;
                             }
                     }
@@ -501,6 +508,7 @@ angular.module('jsonschemaV4App')
             };
 
             this.getSchema = function(id) {
+                console.log('getSchema(' + id + ')');
                 return this.getSchemaById(self.editableSchema, id);
             };
 
