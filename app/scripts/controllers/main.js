@@ -47,6 +47,10 @@ angular.module('jsonschemaV4App').factory('RecursionHelper',
                             iElement.remove();
                             Schemaservice.removeSchema(id);
                         };
+
+                        scope.addProperty = function(obj) {
+                          Schemaservice.addProperty(obj);
+                        }
                     },
                     pre: function(scope, iElement, iAttrs) { }
                 }

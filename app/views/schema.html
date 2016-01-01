@@ -14,7 +14,10 @@
 
       </span>
     </div>
-    <div class="navbar-header pull-right" ng-if="!data.__root__">
+    <div class="navbar-header pull-right" ng-if="!data.__root__ && data.type=='object'">
+      <button type="button" class="btn btn-xs btn-default navbar-btn" ng-click="addProperty(data);">
+        <strong>+</strong>
+      </button>
       <button type="button" class="btn btn-xs btn-default navbar-btn" ng-click="deleteMe(data.id);">
         <strong>x</strong>
       </button>
@@ -187,7 +190,15 @@
 
 <span ng-if="data.properties">
     <span class="label label-info">PROPERTIES</span>
-    <span ng-repeat="property in data.properties">
+    <br><br>
+    <span ng-repeat="(key,property) in data.properties">
+      <div class="col-xs-4">
+        <div class="input-group input-group-sm">
+          <div class="input-group-addon">Key</div>
+          <input type="text" ng-model="property.__key__" class="form-control input-sm col-xs-6"/>
+        </div>
+      </div>
+      <br><br>
         <schema data="property"></schema>
     </span>
 </span>
