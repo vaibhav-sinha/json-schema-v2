@@ -124,14 +124,14 @@ var default_options = {
     // General options.
     includeDefaults: false,
     includeEnums: false,
-    forceRequired: true,
+    forceRequired: false,
     absoluteIds: true,
     numericVerbose: false,
     stringsVerbose: false,
     objectsVerbose: false,
     arraysVerbose: false,
     metadataKeywords: false,
-    additionalItems: true,
+    additionalItems: false,
     additionalProperties: true
 }
 
