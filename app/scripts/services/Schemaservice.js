@@ -82,9 +82,9 @@ angular.module('jsonschemaV4App')
             * ---------------------------------------------------
             * Takes any action on __metadata__ keys.
             * Tidy any properties, for example checking types.
-            * Finally removes any __metadata__ properites.
+            * Finally removes any __metadata__ properties.
             * The resulting JavaScript object is a valid JSON Schema.
-            * @param {object} obj A copy of the pseudo JSON schema contining
+            * @param {object} obj A copy of the pseudo JSON schema containing
                 __metadata__.
                 up the 'required' property from __required__ metadata.
             */
@@ -93,7 +93,7 @@ angular.module('jsonschemaV4App')
                 for (var k in obj)
                 {
                   if (obj[k].__removed__) {
-                    var parentSchema = self.getSchema(obj[k].__parent__);
+                    var parentSchema = self.getSchemaForClone(obj[k].__parent__);
                     var isRequired = obj[k].__required__;
                     delete obj[k];
                     if (parentSchema) {
@@ -119,7 +119,7 @@ angular.module('jsonschemaV4App')
                             case '__required__':
                                 var isRequired = obj[k];
                                 console.log('getSchema('+obj.__parent__+')');
-                                var parentSchema = self.getSchema(obj.__parent__);
+                                var parentSchema = self.getSchemaForClone(obj.__parent__);
                                 if (parentSchema) {
 
                                     if (isRequired) {
@@ -531,6 +531,11 @@ angular.module('jsonschemaV4App')
                 //console.log('getSchema(' + id + ')');
                 return this.getSchemaById(self.editableSchema, id);
             };
+
+          this.getSchemaForClone = function(id) {
+            //console.log('getSchema(' + id + ')');
+            return this.getSchemaById(self.schema, id);
+          };
 
             this.getEditableSchema = function() {
                 return self.editableSchema;
