@@ -50,7 +50,19 @@ angular.module('jsonschemaV4App').factory('RecursionHelper',
 
                         scope.addProperty = function(obj) {
                           Schemaservice.addProperty(obj);
+                          delete obj.showAddProperty;
+                          delete obj.newPropertyName;
                         }
+
+                      scope.showAddPropertyBox = function(obj) {
+                        obj.showAddProperty = true;
+                        delete obj.newPropertyName;
+                      }
+
+                      scope.cancelAddProperty = function(obj) {
+                        delete obj.showAddProperty;
+                        delete obj.newPropertyName;
+                      }
                     },
                     pre: function(scope, iElement, iAttrs) { }
                 }

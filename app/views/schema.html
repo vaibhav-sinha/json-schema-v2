@@ -14,14 +14,19 @@
 
       </span>
     </div>
+  <div class="navbar-header pull-right" ng-if="!data.__root__">
+    <button type="button" class="btn btn-xs btn-default navbar-btn" ng-click="deleteMe(data.id);">
+      <strong>x</strong>
+    </button>
+  </div>
     <div class="navbar-header pull-right" ng-if="!data.__root__ && data.type=='object'">
-      <button type="button" class="btn btn-xs btn-default navbar-btn" ng-click="addProperty(data);">
+      <div ng-show="data.showAddProperty">
+        <input type="text" ng-model="data.newPropertyName" class="form-control input-sm">
+        <button type="button" class="btn btn-xs btn-default navbar-btn" ng-click="addProperty(data);">Add</button>
+        <button type="button" class="btn btn-xs btn-default navbar-btn" ng-click="cancelAddProperty(data);">Cancel</button>
+      </div>
+      <button type="button" class="btn btn-xs btn-default navbar-btn" ng-click="showAddPropertyBox(data);" ng-show="!data.showAddProperty">
         <strong>+</strong>
-      </button>
-    </div>
-    <div class="navbar-header pull-right" ng-if="!data.__root__">
-      <button type="button" class="btn btn-xs btn-default navbar-btn" ng-click="deleteMe(data.id);">
-        <strong>x</strong>
       </button>
     </div>
 </div>

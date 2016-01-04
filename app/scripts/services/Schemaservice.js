@@ -522,9 +522,11 @@ angular.module('jsonschemaV4App')
             };
 
             this.addProperty = function(obj) {
-              var intermediate = Schemafactory.getInstance('key', 'default');
+              var intermediate = Schemafactory.getInstance(obj.newPropertyName, 'default');
               intermediate.parent = obj;
-              obj.properties['key'] = self.constructSchema(intermediate);
+              var newSchema = self.constructSchema(intermediate);
+              newSchema.__parent__ = obj.id;
+              obj.properties[obj.newPropertyName] = newSchema;
             };
 
             this.getSchema = function(id) {
