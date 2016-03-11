@@ -102,7 +102,7 @@ angular.module('jsonschemaV4App')
                     return;
                 }
                 // Update app options in case the user defined new values.
-                user_defined_options.url = $scope.url;
+                user_defined_options.url = $scope.url + '/' + $scope.connector + '/' + $scope.entity + '/v' + $scope.version;
                 user_defined_options.json = $scope.json;
                 user_defined_options.includeDefaults = $scope.includeDefaults;
                 user_defined_options.includeEnums = $scope.includeEnums;
@@ -133,6 +133,9 @@ angular.module('jsonschemaV4App')
                 $scope.inputError = false;
                 //
                 $scope.url = default_options.url;
+                $scope.connector = default_options.connector;
+                $scope.entity = default_options.entity;
+                $scope.version = default_options.version;
                 $scope.json = angular.toJson(default_options.json, true);
                 $scope.includeDefaults = default_options.includeDefaults;
                 $scope.includeEnums = default_options.includeEnums;
